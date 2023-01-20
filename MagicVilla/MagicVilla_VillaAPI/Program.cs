@@ -1,4 +1,8 @@
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using MagicVilla_Infrastructure;
 using MagicVilla_Infrastructure.DbContexts;
+using MagicVilla_VillaAPI;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Serilog.Events;
@@ -15,8 +19,16 @@ builder.Host.UseSerilog((ctx, lc) => lc
 try
 {
     // Add services to the container.
-    var connectionString = builder.Configuration.GetConnectionString("DevTrackDbConnection");
+    var connectionString = builder.Configuration.GetConnectionString("MagicVillDbConnection");
     var assemblyName = Assembly.GetExecutingAssembly().FullName;
+
+    builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+    builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
+    {
+        containerBuilder.RegisterModule(new ApiModule());
+        containerBuilder.RegisterModule(new InfrastructureModule(connectionString,
+            assemblyName));
+    });
 
     builder.Services.AddDbContext<ApplicationDbContext>(options =>
         options.UseSqlServer(connectionString, m => m.MigrationsAssembly(assemblyName)));
@@ -30,6 +42,8 @@ try
     builder.Services.AddSwaggerGen();
 
     var app = builder.Build();
+
+    Log.Information("Web API is starting");
 
     // Configure the HTTP request pipeline.
     if (app.Environment.IsDevelopment())

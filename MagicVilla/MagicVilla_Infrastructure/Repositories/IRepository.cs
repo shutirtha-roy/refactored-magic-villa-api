@@ -24,13 +24,5 @@ namespace MagicVilla_Infrastructure.Repositories
             Expression<Func<TEntity, bool>> filter = null,
             string orderBy = null,
             string includeProperties = "", int pageIndex = 1, int pageSize = 10, bool isTrackingOff = false);
-
-        Task<IList<TEntity>> Get(Expression<Func<TEntity, bool>> filter = null,
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            string includeProperties = "", bool isTrackingOff = false);
-
-        Task<IList<TEntity>> GetDynamic(Expression<Func<TEntity, bool>> filter = null,
-            string orderBy = null,
-            string includeProperties = "", bool isTrackingOff = false);
     }
 }

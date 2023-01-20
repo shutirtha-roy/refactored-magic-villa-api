@@ -33,5 +33,7 @@ namespace MagicVilla_Infrastructure.DbContexts
         {
             base.OnModelCreating(modelBuilder);
         }
+
+        //public DbSet<Villa> Villas { get; set; }
     }
 }

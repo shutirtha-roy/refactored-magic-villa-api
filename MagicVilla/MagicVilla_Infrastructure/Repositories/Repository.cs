@@ -169,16 +169,5 @@ namespace MagicVilla_Infrastructure.Repositories
                     return (result.ToList(), total, totalDisplay);
             }
         }
-
-        public Task<IList<TEntity>> Get(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, 
-            IOrderedQueryable<TEntity>> orderBy = null, string includeProperties = "", bool isTrackingOff = false)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IList<TEntity> GetDynamic(Expression<Func<TEntity, bool>> filter = null, string orderBy = null, string includeProperties = "", bool isTrackingOff = false)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

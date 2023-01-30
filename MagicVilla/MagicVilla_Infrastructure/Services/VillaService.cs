@@ -56,7 +56,14 @@ namespace MagicVilla_Infrastructure.Services
 
         public async Task<VillaBO> GetVilla(int id)
         {
-            throw new NotImplementedException();
+            var villaEntity = await _applicationUnitOfWork.Villas.GetById(id);
+
+            if (villaEntity == null)
+                throw new Exception("Villa doesn't exist");
+
+            var villaBO = _mapper.Map<VillaBO>(villaEntity);
+
+            return villaBO;
         }
 
         public async Task<IList<VillaBO>> GetVillas()

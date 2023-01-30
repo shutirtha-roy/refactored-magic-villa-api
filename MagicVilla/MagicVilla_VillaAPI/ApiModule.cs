@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using MagicVilla_VillaAPI.Model;
 
 namespace MagicVilla_VillaAPI
 {
@@ -6,6 +7,12 @@ namespace MagicVilla_VillaAPI
     {
         protected override void Load(ContainerBuilder builder)
         {
+            builder.RegisterType<VillaCreateModel>()
+                .AsSelf();
+
+            builder.RegisterType<VillaListModel>()
+                .AsSelf();
+
             base.Load(builder);
         }
     }

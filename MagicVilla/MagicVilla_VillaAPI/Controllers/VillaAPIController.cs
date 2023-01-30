@@ -18,11 +18,30 @@ namespace MagicVilla_VillaAPI.Controllers
             _scope = scope;
         }
 
+        #region Previous GetVillasCode
+        //[HttpGet]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //public ActionResult<IEnumerable<VillaDTO>> GetVillas()
+        //{
+        //    return Ok(VillaStore.villaList);
+        //}
+        #endregion
+
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public ActionResult<IEnumerable<VillaDTO>> GetVillas()
+        public async Task<ActionResult<object>> GetVillas()
         {
-            return Ok(VillaStore.villaList);
+            try
+            {
+                var model = _scope.Resolve<VillaListModel>();
+                var villas = await model.GetAllVillas();
+
+                return Ok(villas);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet("{id:int}", Name = "GetVilla")]
@@ -43,6 +62,7 @@ namespace MagicVilla_VillaAPI.Controllers
             return Ok(villa);
         }
 
+        #region Previous CreateVillaCode
         //[HttpPost]
         ////[ProducesResponseType(StatusCodes.Status200OK)]
         //[ProducesResponseType(StatusCodes.Status201Created)]
@@ -76,6 +96,7 @@ namespace MagicVilla_VillaAPI.Controllers
         //    //return Ok(villaDTO);
         //    return CreatedAtRoute("GetVilla", new { id = villaDTO.Id }, villaDTO);
         //}
+        #endregion
 
         [HttpPost]
         public async Task<IActionResult> CreateVilla(VillaCreateModel model)

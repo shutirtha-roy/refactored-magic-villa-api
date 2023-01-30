@@ -34,7 +34,13 @@ namespace MagicVilla_Infrastructure.Services
 
         public async Task DeleteVilla(int id)
         {
-            throw new NotImplementedException();
+            var count = await _applicationUnitOfWork.Villas.GetCount(x => x.Id == id);
+
+            if (count == 0)
+                throw new Exception("Villa doesn't exist");
+
+            await _applicationUnitOfWork.Villas.Remove(id);
+            _applicationUnitOfWork.Save();
         }
 
         public async Task EditVilla(VillaBO villa)

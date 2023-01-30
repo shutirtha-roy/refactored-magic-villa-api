@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using MagicVilla_Infrastructure.DbContexts;
 using MagicVilla_Infrastructure.Repositories;
+using MagicVilla_Infrastructure.Services;
 using MagicVilla_Infrastructure.UnitOfWorks;
 
 namespace MagicVilla_Infrastructure
@@ -26,6 +27,10 @@ namespace MagicVilla_Infrastructure
             builder.RegisterType<ApplicationDbContext>().As<IApplicationDbContext>()
                 .WithParameter("connectionString", _connectionString)
                 .WithParameter("migrationAssemblyName", _migrationAssemblyName)
+                .InstancePerLifetimeScope();
+
+            builder.RegisterType<VillaService>()
+                .As<IVillaService>()
                 .InstancePerLifetimeScope();
 
             builder.RegisterType<VillaRepository>()

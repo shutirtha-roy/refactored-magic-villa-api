@@ -68,7 +68,17 @@ namespace MagicVilla_Infrastructure.Services
 
         public async Task<IList<VillaBO>> GetVillas()
         {
-            throw new NotImplementedException();
+            var villasEO = await _applicationUnitOfWork.Villas.GetAll();
+
+            var villas = new List<VillaBO>();
+
+            foreach(var villaEO in villasEO)
+            {
+                var villaBO = _mapper.Map<VillaBO>(villaEO);
+                villas.Add(villaBO);
+            }
+
+            return villas;
         }
     }
 }

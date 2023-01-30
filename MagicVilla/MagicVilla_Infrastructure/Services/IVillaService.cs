@@ -5,9 +5,9 @@ namespace MagicVilla_Infrastructure.Services
 {
     public interface IVillaService
     {
-        Task CreateVilla();
-        Task EditVilla(VillaEO villa);
-        Task DeleteVilla();
+        Task CreateVilla(VillaBO villa);
+        Task EditVilla(VillaBO villa);
+        Task DeleteVilla(int id);
         Task<VillaBO> GetVilla(int id);
         Task<IList<VillaBO>> GetVillas();
     }

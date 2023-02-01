@@ -44,22 +44,40 @@ namespace MagicVilla_VillaAPI.Controllers
             }
         }
 
-        [HttpGet("{id:int}", Name = "GetVilla")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        //[ProducesResponseType(200, Type = typeof(VillaDTO)]
-        public ActionResult<VillaDTO> GetVilla(int id)
+        #region PreviousGetVillaCode
+        //[HttpGet("{id:int}", Name = "GetVilla")]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
+        //[ProducesResponseType(StatusCodes.Status404NotFound)]
+        ////[ProducesResponseType(200, Type = typeof(VillaDTO)]
+        //public ActionResult<VillaDTO> GetVilla(int id)
+        //{
+        //    if (id == 0)
+        //        return BadRequest();
+
+        //    var villa = VillaStore.villaList.FirstOrDefault(u => u.Id == id);
+
+        //    if(villa == null)
+        //        return NotFound();
+
+        //    return Ok(villa);
+        //}
+        #endregion
+
+        [HttpGet("{id}")]
+        public async Task<object> GetVilla(int id)
         {
-            if (id == 0)
-                return BadRequest();
+            try
+            {
+                var model = _scope.Resolve<VillaListModel>();
+                var villa = await model.GetVilla(id);
 
-            var villa = VillaStore.villaList.FirstOrDefault(u => u.Id == id);
-
-            if(villa == null)
-                return NotFound();
-
-            return Ok(villa);
+                return Ok(villa);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         #region Previous CreateVillaCode

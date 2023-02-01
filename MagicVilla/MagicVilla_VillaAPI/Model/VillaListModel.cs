@@ -19,6 +19,12 @@ namespace MagicVilla_VillaAPI.Model
             _villaService = _scope.Resolve<IVillaService>();
         }
 
+        internal async Task<VillaBO> GetVilla(int id)
+        {
+            var villa = await _villaService.GetVilla(id);
+            return villa;
+        }
+
         internal async Task<IList<VillaBO>> GetAllVillas()
         {
             var villas = await _villaService.GetVillas();

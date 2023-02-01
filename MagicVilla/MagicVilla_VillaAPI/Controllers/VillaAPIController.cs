@@ -133,21 +133,39 @@ namespace MagicVilla_VillaAPI.Controllers
             }
         }
 
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [HttpDelete("{id:int}", Name = "DeleteVilla")]
-        public IActionResult DeleteVilla(int id)
+        #region Previous DeleteVilla Code
+        //[ProducesResponseType(StatusCodes.Status204NoContent)]
+        //[ProducesResponseType(StatusCodes.Status404NotFound)]
+        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
+        //[HttpDelete("{id:int}", Name = "DeleteVilla")]
+        //public IActionResult DeleteVilla(int id)
+        //{
+        //    if (id == 0)
+        //        return BadRequest();
+
+        //    var villa = VillaStore.villaList.FirstOrDefault(u => u.Id == id);
+        //    if (villa == null)
+        //        return NotFound();
+
+        //    VillaStore.villaList.Remove(villa);
+        //    return NoContent();
+        //}
+        #endregion
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteVilla(int id)
         {
-            if (id == 0)
-                return BadRequest();
+            try
+            {
+                var model = _scope.Resolve<VillaListModel>();
+                await model.DeleteVilla(id);
 
-            var villa = VillaStore.villaList.FirstOrDefault(u => u.Id == id);
-            if (villa == null)
-                return NotFound();
-
-            VillaStore.villaList.Remove(villa);
-            return NoContent();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPut("{id:int}", Name = "UpdateVilla")]

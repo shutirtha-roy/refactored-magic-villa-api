@@ -30,5 +30,10 @@ namespace MagicVilla_VillaAPI.Model
             var villas = await _villaService.GetVillas();
             return villas;
         }
+
+        internal async Task DeleteVilla(int id)
+        {
+            await _villaService.DeleteVilla(id);
+        }
     }
 }

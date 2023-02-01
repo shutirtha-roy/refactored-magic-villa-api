@@ -168,20 +168,38 @@ namespace MagicVilla_VillaAPI.Controllers
             }
         }
 
-        [HttpPut("{id:int}", Name = "UpdateVilla")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult UpdateVilla(int id, [FromBody]VillaDTO villaDTO)
+        #region UpdateVilla Code
+        //[HttpPut("{id:int}", Name = "UpdateVilla")]
+        //[ProducesResponseType(StatusCodes.Status204NoContent)]
+        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
+        //public IActionResult UpdateVilla(int id, [FromBody]VillaDTO villaDTO)
+        //{
+        //    if (villaDTO == null || id != villaDTO.Id)
+        //        return BadRequest();
+
+        //    var villa = VillaStore.villaList.FirstOrDefault(u => u.Id == id);
+        //    villa.Name = villaDTO.Name;
+        //    villa.Sqft = villaDTO.Sqft;
+        //    villa.Occupancy = villaDTO.Occupancy;
+
+        //    return NoContent();
+        //}
+        #endregion
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateVilla(VillaEditModel model)
         {
-            if (villaDTO == null || id != villaDTO.Id)
-                return BadRequest();
+            try
+            {
+                model.ResolveDependency(_scope);
+                await model.EditVilla();
 
-            var villa = VillaStore.villaList.FirstOrDefault(u => u.Id == id);
-            villa.Name = villaDTO.Name;
-            villa.Sqft = villaDTO.Sqft;
-            villa.Occupancy = villaDTO.Occupancy;
-
-            return NoContent();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPatch("{id:int}", Name = "UpdatePartialVilla")]

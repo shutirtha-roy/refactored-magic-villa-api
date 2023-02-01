@@ -10,6 +10,9 @@ namespace MagicVilla_VillaAPI.Profiles
         {
             CreateMap<VillaCreateModel, VillaBO>()
                 .ReverseMap();
+
+            CreateMap<VillaBO, VillaEditModel>()
+                .ReverseMap();
         }
     }
 }

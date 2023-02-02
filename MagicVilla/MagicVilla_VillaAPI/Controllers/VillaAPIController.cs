@@ -202,25 +202,51 @@ namespace MagicVilla_VillaAPI.Controllers
             }
         }
 
-        [HttpPatch("{id:int}", Name = "UpdatePartialVilla")]
+        #region Previous Patch Code
+        //[HttpPatch("{id:int}", Name = "UpdatePartialVilla")]
+        //[ProducesResponseType(StatusCodes.Status204NoContent)]
+        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
+        //public IActionResult UpdatePartialVilla(int id, JsonPatchDocument<VillaDTO> patchDTO)
+        //{
+        //    if (patchDTO == null || id == 0)
+        //        return BadRequest();
+
+        //    var villa = VillaStore.villaList.FirstOrDefault(u => u.Id == id);
+
+        //    if (villa == null)
+        //        return BadRequest();
+
+        //    patchDTO.ApplyTo(villa, ModelState);
+
+        //    if (!ModelState.IsValid)
+        //        return BadRequest(ModelState);
+
+        //    return NoContent();
+        //}
+        #endregion
+
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult UpdatePartialVilla(int id, JsonPatchDocument<VillaDTO> patchDTO)
+        [HttpPatch("{id:int}", Name = "UpdatePartialVilla")]
+        public async Task<IActionResult> UpdatePartialVilla(int id, JsonPatchDocument<VillaEditModel> patchDTO)
         {
-            if (patchDTO == null || id == 0)
-                return BadRequest();
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
 
-            var villa = VillaStore.villaList.FirstOrDefault(u => u.Id == id);
+                var model = _scope.Resolve<VillaEditModel>();
+                var villa = await model.GetVilla(id);
+                patchDTO.ApplyTo(villa, ModelState);
+                villa.ResolveDependency(_scope);
+                await villa.EditVilla();
 
-            if (villa == null)
-                return BadRequest();
-
-            patchDTO.ApplyTo(villa, ModelState);
-
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            return NoContent();
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

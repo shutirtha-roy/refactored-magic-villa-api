@@ -13,6 +13,9 @@ namespace MagicVilla_VillaAPI
             builder.RegisterType<VillaListModel>()
                 .AsSelf();
 
+            builder.RegisterType<VillaEditModel>()
+                .AsSelf();
+
             base.Load(builder);
         }
     }

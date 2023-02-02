@@ -39,6 +39,12 @@ namespace MagicVilla_VillaAPI.Model
             _mapper = _scope.Resolve<IMapper>();
         }
 
+        internal async Task<VillaEditModel> GetVilla(int id)
+        {
+            var villa = await _villaService.GetVilla(id);
+            return _mapper.Map<VillaEditModel>(villa);
+        }
+
         internal async Task EditVilla()
         {
             var villa = _mapper.Map<VillaBO>(this);

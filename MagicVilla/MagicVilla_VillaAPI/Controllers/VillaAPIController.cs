@@ -4,6 +4,7 @@ using MagicVilla_VillaAPI.Model;
 using MagicVilla_VillaAPI.Model.Dto;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace MagicVilla_VillaAPI.Controllers
 {
@@ -12,10 +13,12 @@ namespace MagicVilla_VillaAPI.Controllers
     public class VillaAPIController : ControllerBase
     {
         private readonly ILifetimeScope _scope;
+        private readonly APIResponse _response;
 
         public VillaAPIController(ILifetimeScope scope)
         {
             _scope = scope;
+            _response = _scope.Resolve<APIResponse>();
         }
 
         #region Previous GetVillasCode
@@ -36,11 +39,24 @@ namespace MagicVilla_VillaAPI.Controllers
                 var model = _scope.Resolve<VillaListModel>();
                 var villas = await model.GetAllVillas();
 
-                return Ok(villas);
+                _response.StatusCode = HttpStatusCode.OK;
+                _response.IsSuccess = true;
+                _response.ErrorMessages = new List<string>();
+                _response.Result = villas;
+
+                return Ok(_response);
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                _response.StatusCode = HttpStatusCode.BadRequest;
+                _response.IsSuccess = false;
+                _response.ErrorMessages = new List<string>()
+                {
+                    ex.Message
+                };
+                _response.Result = null;
+
+                return BadRequest(_response);
             }
         }
 
@@ -72,11 +88,24 @@ namespace MagicVilla_VillaAPI.Controllers
                 var model = _scope.Resolve<VillaListModel>();
                 var villa = await model.GetVilla(id);
 
-                return Ok(villa);
+                _response.StatusCode = HttpStatusCode.OK;
+                _response.IsSuccess = true;
+                _response.ErrorMessages = new List<string>();
+                _response.Result = villa;
+
+                return Ok(_response);
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                _response.StatusCode = HttpStatusCode.BadRequest;
+                _response.IsSuccess = false;
+                _response.ErrorMessages = new List<string>()
+                {
+                    ex.Message
+                };
+                _response.Result = null;
+
+                return BadRequest(_response);
             }
         }
 
@@ -125,11 +154,24 @@ namespace MagicVilla_VillaAPI.Controllers
 
                 await model.CreateVilla();
 
-                return Ok();
+                _response.StatusCode = HttpStatusCode.NoContent;
+                _response.IsSuccess = true;
+                _response.ErrorMessages = new List<string>();
+                _response.Result = null;
+
+                return Ok(_response);
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                _response.StatusCode = HttpStatusCode.BadRequest;
+                _response.IsSuccess = false;
+                _response.ErrorMessages = new List<string>()
+                {
+                    ex.Message
+                };
+                _response.Result = null;
+
+                return BadRequest(_response);
             }
         }
 
@@ -160,11 +202,24 @@ namespace MagicVilla_VillaAPI.Controllers
                 var model = _scope.Resolve<VillaListModel>();
                 await model.DeleteVilla(id);
 
-                return Ok();
+                _response.StatusCode = HttpStatusCode.NoContent;
+                _response.IsSuccess = true;
+                _response.ErrorMessages = new List<string>();
+                _response.Result = null;
+
+                return Ok(_response);
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                _response.StatusCode = HttpStatusCode.BadRequest;
+                _response.IsSuccess = false;
+                _response.ErrorMessages = new List<string>()
+                {
+                    ex.Message
+                };
+                _response.Result = null;
+
+                return BadRequest(_response);
             }
         }
 
@@ -194,11 +249,24 @@ namespace MagicVilla_VillaAPI.Controllers
                 model.ResolveDependency(_scope);
                 await model.EditVilla();
 
-                return Ok();
+                _response.StatusCode = HttpStatusCode.NoContent;
+                _response.IsSuccess = true;
+                _response.ErrorMessages = new List<string>();
+                _response.Result = null;
+
+                return Ok(_response);
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                _response.StatusCode = HttpStatusCode.BadRequest;
+                _response.IsSuccess = false;
+                _response.ErrorMessages = new List<string>()
+                {
+                    ex.Message
+                };
+                _response.Result = null;
+
+                return BadRequest(_response);
             }
         }
 
@@ -241,11 +309,24 @@ namespace MagicVilla_VillaAPI.Controllers
                 villa.ResolveDependency(_scope);
                 await villa.EditVilla();
 
-                return NoContent();
+                _response.StatusCode = HttpStatusCode.NoContent;
+                _response.IsSuccess = true;
+                _response.ErrorMessages = new List<string>();
+                _response.Result = null;
+
+                return Ok(_response);
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                _response.StatusCode = HttpStatusCode.BadRequest;
+                _response.IsSuccess = false;
+                _response.ErrorMessages = new List<string>()
+                {
+                    ex.Message
+                };
+                _response.Result = null;
+
+                return BadRequest(_response);
             }
         }
     }

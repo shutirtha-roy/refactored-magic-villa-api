@@ -16,6 +16,9 @@ namespace MagicVilla_VillaAPI
             builder.RegisterType<VillaEditModel>()
                 .AsSelf();
 
+            builder.RegisterType<APIResponse>()
+                .AsSelf();
+
             base.Load(builder);
         }
     }

@@ -22,7 +22,6 @@ namespace MagicVilla_VillaAPI.Model
 
         public VillaCreateModel()
         {
-
         }
 
         public VillaCreateModel(IVillaService villaService, IMapper mapper)

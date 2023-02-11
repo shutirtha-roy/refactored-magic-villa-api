@@ -23,7 +23,6 @@ namespace MagicVilla_VillaAPI.Model
 
         public VillaEditModel() : base()
         {
-
         }
 
         public VillaEditModel(IVillaService villaService, IMapper mapper)

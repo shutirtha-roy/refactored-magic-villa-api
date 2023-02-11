@@ -8,7 +8,6 @@ namespace MagicVilla_VillaAPI.Model
 
         public BaseModel()
         {
-
         }
 
         public virtual void ResolveDependency(ILifetimeScope scope)

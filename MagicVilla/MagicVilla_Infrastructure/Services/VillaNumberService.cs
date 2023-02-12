@@ -33,9 +33,15 @@ namespace MagicVilla_Infrastructure.Services
             _applicationUnitOfWork.Save();
         }
 
-        public async Task DeleteVillaNumber(int id)
+        public async Task DeleteVillaNumber(int villaNo)
         {
-            throw new NotImplementedException();
+            var count = await _applicationUnitOfWork.VillaNumbers.GetCount(x => x.VillaNo == villaNo);
+
+            if (count == 0)
+                throw new Exception("Villa Number doesn't exist");
+
+            await _applicationUnitOfWork.Villas.Remove(villaNo);
+            _applicationUnitOfWork.Save();
         }
 
         public async Task EditVillaNumber(VillaNumberBO villaNumber)

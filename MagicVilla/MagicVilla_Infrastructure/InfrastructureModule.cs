@@ -37,6 +37,14 @@ namespace MagicVilla_Infrastructure
                 .As<IVillaRepository>()
                 .InstancePerLifetimeScope();
 
+            builder.RegisterType<VillaNumberService>()
+                .As<IVillaNumberService>()
+                .InstancePerLifetimeScope();
+
+            builder.RegisterType<VillaNumberRepository>()
+                .As<IVillaNumberRepository>()
+                .InstancePerLifetimeScope();
+
             builder.RegisterType<ApplicationUnitOfWork>()
                 .As<IApplicationUnitOfWork>()
                 .InstancePerLifetimeScope();

@@ -19,7 +19,18 @@ namespace MagicVilla_Infrastructure.Services
 
         public async Task CreateVillaNumber(VillaNumberBO villaNumber)
         {
-            throw new NotImplementedException();
+            if (villaNumber.Id > 0)
+                throw new Exception("Internal Server Error");
+
+            var count = await _applicationUnitOfWork.VillaNumbers.GetCount(x => x.VillaNo == villaNumber.VillaNo);
+
+            if (count > 0)
+                throw new Exception("VillaNumber already exists");
+
+            var villaNumberEntity = _mapper.Map<VillaNumberEO>(villaNumber);
+
+            await _applicationUnitOfWork.VillaNumbers.Add(villaNumberEntity);
+            _applicationUnitOfWork.Save();
         }
 
         public async Task DeleteVillaNumber(int id)

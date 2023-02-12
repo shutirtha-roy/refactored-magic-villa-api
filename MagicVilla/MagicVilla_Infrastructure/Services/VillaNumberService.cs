@@ -55,9 +55,16 @@ namespace MagicVilla_Infrastructure.Services
             _applicationUnitOfWork.Save();
         }
 
-        public async Task<VillaNumberBO> GetVillaNumber(int id)
+        public async Task<VillaNumberBO> GetVillaNumber(int villaNo)
         {
-            throw new NotImplementedException();
+            var villaNumberEntity = await _applicationUnitOfWork.VillaNumbers.GetById(villaNo);
+
+            if (villaNumberEntity == null)
+                throw new Exception("Villa Number doesn't exist");
+
+            var villaNumberBO = _mapper.Map<VillaNumberBO>(villaNumberEntity);
+
+            return villaNumberBO;
         }
 
         public async Task<IList<VillaNumberBO>> GetVillaNumbers()

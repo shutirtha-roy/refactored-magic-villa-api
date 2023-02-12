@@ -18,5 +18,6 @@ namespace MagicVilla_Infrastructure.Entities
         public string Amenity { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set; }
+        public List<VillaNumber> VillaNumbers { get; set; }
     }
 }

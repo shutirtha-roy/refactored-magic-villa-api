@@ -31,6 +31,11 @@ namespace MagicVilla_Infrastructure.DbContexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Villa>()
+                .HasMany(n => n.VillaNumbers)
+                .WithOne(a => a.Villa)
+                .HasForeignKey(x => x.VillaId);
+
             modelBuilder.Entity<Villa>().HasData(
                 new Villa
                 {
@@ -97,5 +102,6 @@ namespace MagicVilla_Infrastructure.DbContexts
         }
 
         public DbSet<Villa> Villas { get; set; }
+        public DbSet<VillaNumber> VillaNumbers { get; set; }
     }
 }

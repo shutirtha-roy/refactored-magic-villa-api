@@ -7,8 +7,8 @@ namespace MagicVilla_Infrastructure.Services
     {
         Task CreateVillaNumber(VillaNumberBO villaNumber);
         Task EditVillaNumber(VillaNumberBO villaNumber);
-        Task DeleteVillaNumber(int id);
-        Task<VillaNumberBO> GetVillaNumber(int id);
+        Task DeleteVillaNumber(int villaNo);
+        Task<VillaNumberBO> GetVillaNumber(int villaNo);
         Task<IList<VillaNumberBO>> GetVillaNumbers();
     }
 }

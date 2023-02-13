@@ -27,6 +27,11 @@ namespace MagicVilla_Infrastructure.Services
             if (count > 0)
                 throw new Exception("VillaNumber already exists");
 
+            var villaCount = await _applicationUnitOfWork.VillaNumbers.GetCount(x => x.VillaId == villaNumber.VillaId);
+
+            if (villaCount == 0)
+                throw new Exception("Villa doesn't exist, you must have a valid Villa");
+
             var villaNumberEntity = _mapper.Map<VillaNumberEO>(villaNumber);
 
             await _applicationUnitOfWork.VillaNumbers.Add(villaNumberEntity);
@@ -50,6 +55,11 @@ namespace MagicVilla_Infrastructure.Services
 
             if (villaNumberEntity == null)
                 throw new Exception("Villa Number doesn't exist");
+
+            var villaCount = await _applicationUnitOfWork.VillaNumbers.GetCount(x => x.VillaId == villaNumber.VillaId);
+
+            if (villaCount == 0)
+                throw new Exception("Villa doesn't exist, you must have a valid Villa");
 
             villaNumberEntity = _mapper.Map(villaNumber, villaNumberEntity);
             _applicationUnitOfWork.Save();

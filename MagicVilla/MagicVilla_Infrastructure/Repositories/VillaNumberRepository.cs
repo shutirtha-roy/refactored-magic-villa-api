@@ -17,5 +17,10 @@ namespace MagicVilla_Infrastructure.Repositories
         {
             return _dbContext.VillaNumbers.Include(x => x.Villa).Where(y => y.VillaNo == villaNo).FirstOrDefault();
         }
+
+        public async Task<List<VillaNumber>> GetAllVillaNumbers()
+        {
+            return _dbContext.VillaNumbers.Include(x => x.Villa).ToList();
+        }
     }
 }

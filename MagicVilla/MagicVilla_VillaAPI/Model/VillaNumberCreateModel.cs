@@ -12,7 +12,7 @@ namespace MagicVilla_VillaAPI.Model
         public int VillaNo { get; set; }
 
         [Required]
-        public int VillaID { get; set; }
+        public int VillaId { get; set; }
         public string SpecialDetails { get; set; }
 
         private IVillaNumberService _villaNumberService;

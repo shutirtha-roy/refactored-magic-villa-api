@@ -57,7 +57,7 @@ namespace MagicVilla_Infrastructure.Services
 
         public async Task<VillaNumberBO> GetVillaNumber(int villaNo)
         {
-            var villaNumberEntity = await _applicationUnitOfWork.VillaNumbers.GetById(villaNo);
+            var villaNumberEntity = await _applicationUnitOfWork.VillaNumbers.GetVillaNumberById(villaNo);
 
             if (villaNumberEntity == null)
                 throw new Exception("Villa Number doesn't exist");
@@ -69,7 +69,7 @@ namespace MagicVilla_Infrastructure.Services
 
         public async Task<IList<VillaNumberBO>> GetVillaNumbers()
         {
-            var villaNumbersEO = await _applicationUnitOfWork.VillaNumbers.GetAll();
+            var villaNumbersEO = await _applicationUnitOfWork.VillaNumbers.GetAllVillaNumbers();
 
             var villaNumbers = new List<VillaNumberBO>();
 

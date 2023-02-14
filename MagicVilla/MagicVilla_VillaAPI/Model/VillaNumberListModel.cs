@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using AutoMapper;
 using MagicVilla_Infrastructure.Services;
 using VillaNumberBO = MagicVilla_Infrastructure.BusinessObjects.VillaNumber;
 
@@ -6,23 +7,42 @@ namespace MagicVilla_VillaAPI.Model
 {
     public class VillaNumberListModel : BaseModel
     {
-        private IVillaNumberService _villaNumberService;
+        public IList<VillaNumberModel> VillaNumberModels { get; private set; }
 
-        public VillaNumberListModel(IVillaNumberService villaNumberService)
+        private IVillaNumberService _villaNumberService;
+        private IMapper _mapper;
+
+
+        public VillaNumberListModel(IVillaNumberService villaNumberService, IMapper mapper)
         {
             _villaNumberService = villaNumberService;
+            _mapper = mapper;
+            VillaNumberModels = new List<VillaNumberModel>();
         }
 
         public override void ResolveDependency(ILifetimeScope scope)
         {
             base.ResolveDependency(scope);
+            _mapper = _scope.Resolve<IMapper>();
             _villaNumberService = _scope.Resolve<IVillaNumberService>();
         }
 
-        internal async Task<IList<VillaNumberBO>> GetAllVillaNumbers()
+        private async Task AddVillaNumbersToList(IList<VillaNumberBO> villaNumbers)
+        {
+            foreach (var villaNumber in villaNumbers)
+            {
+                VillaNumberModel villaNumberModel = new();
+                villaNumberModel = _mapper.Map(villaNumber, villaNumberModel);
+                villaNumberModel.Villa.VillaNumbers = null;
+                VillaNumberModels.Add(villaNumberModel);
+            }
+        }
+
+        internal async Task<IList<VillaNumberModel>> GetAllVillaNumbers()
         {
             var villaNumbers = await _villaNumberService.GetVillaNumbers();
-            return villaNumbers;
+            await AddVillaNumbersToList(villaNumbers);
+            return VillaNumberModels;
         }
 
         internal async Task DeleteVillaNumber(int villaNo)

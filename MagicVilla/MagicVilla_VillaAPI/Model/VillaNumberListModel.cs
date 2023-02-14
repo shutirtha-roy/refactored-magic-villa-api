@@ -38,6 +38,13 @@ namespace MagicVilla_VillaAPI.Model
             }
         }
 
+        internal async Task<VillaNumberBO> GetVillaNumber(int villaNo)
+        {
+            var villaNumber = await _villaNumberService.GetVillaNumber(villaNo);
+            villaNumber.Villa.VillaNumbers = null;
+            return villaNumber;
+        }
+
         internal async Task<IList<VillaNumberModel>> GetAllVillaNumbers()
         {
             var villaNumbers = await _villaNumberService.GetVillaNumbers();

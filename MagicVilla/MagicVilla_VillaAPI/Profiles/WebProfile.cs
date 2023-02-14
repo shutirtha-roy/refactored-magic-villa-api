@@ -15,10 +15,13 @@ namespace MagicVilla_VillaAPI.Profiles
             CreateMap<VillaBO, VillaEditModel>()
                 .ReverseMap();
 
-            CreateMap<VillaNumberEditModel, VillaNumberBO>()
+            CreateMap<VillaNumberCreateModel, VillaNumberBO>()
                 .ReverseMap();
 
             CreateMap<VillaNumberBO, VillaNumberEditModel>()
+                .ReverseMap();
+
+            CreateMap<VillaNumberBO, VillaNumberModel>()
                 .ReverseMap();
         }
     }

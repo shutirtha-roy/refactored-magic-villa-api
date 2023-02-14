@@ -25,6 +25,9 @@ namespace MagicVilla_VillaAPI
             builder.RegisterType<VillaNumberEditModel>()
                 .AsSelf();
 
+            builder.RegisterType<VillaNumberModel>()
+                .AsSelf();
+
             builder.RegisterType<APIResponse>()
                 .AsSelf();
 

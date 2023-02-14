@@ -27,7 +27,7 @@ namespace MagicVilla_Infrastructure.Services
             if (count > 0)
                 throw new Exception("VillaNumber already exists");
 
-            var villaCount = await _applicationUnitOfWork.VillaNumbers.GetCount(x => x.VillaId == villaNumber.VillaId);
+            var villaCount = await _applicationUnitOfWork.Villas.GetCount(x => x.Id == villaNumber.VillaId);
 
             if (villaCount == 0)
                 throw new Exception("Villa doesn't exist, you must have a valid Villa");

@@ -48,6 +48,35 @@ namespace MagicVilla_VillaAPI.Controllers
             }
         }
 
+        [HttpGet("{villaNo}")]
+        public async Task<object> GetVillaNumber(int villaNo)
+        {
+            try
+            {
+                var model = _scope.Resolve<VillaNumberListModel>();
+                var villaNumber = await model.GetVillaNumber(villaNo);
+
+                _response.StatusCode = HttpStatusCode.OK;
+                _response.IsSuccess = true;
+                _response.ErrorMessages = new List<string>();
+                _response.Result = villaNumber;
+
+                return Ok(_response);
+            }
+            catch (Exception ex)
+            {
+                _response.StatusCode = HttpStatusCode.BadRequest;
+                _response.IsSuccess = false;
+                _response.ErrorMessages = new List<string>()
+                {
+                    ex.Message
+                };
+                _response.Result = null;
+
+                return BadRequest(_response);
+            }
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateVillaNumber(VillaNumberCreateModel model)
         {

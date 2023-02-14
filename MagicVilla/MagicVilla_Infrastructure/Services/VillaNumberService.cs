@@ -45,7 +45,10 @@ namespace MagicVilla_Infrastructure.Services
             if (count == 0)
                 throw new Exception("Villa Number doesn't exist");
 
-            await _applicationUnitOfWork.Villas.Remove(villaNo);
+            var villaNumber = await GetVillaNumber(villaNo);
+            var villaNumberEntity = _mapper.Map<VillaNumberEO>(villaNumber);
+
+            await _applicationUnitOfWork.VillaNumbers.Remove(villaNumberEntity);
             _applicationUnitOfWork.Save();
         }
 

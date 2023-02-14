@@ -15,7 +15,7 @@ namespace MagicVilla_Infrastructure.Repositories
 
         public async Task<VillaNumber> GetVillaNumberById(int villaNo)
         {
-            return _dbContext.VillaNumbers.Include(x => x.Villa).Where(y => y.VillaNo == villaNo).FirstOrDefault();
+            return _dbContext.VillaNumbers.AsNoTracking().Include(x => x.Villa).Where(y => y.VillaNo == villaNo).FirstOrDefault();
         }
 
         public async Task<List<VillaNumber>> GetAllVillaNumbers()

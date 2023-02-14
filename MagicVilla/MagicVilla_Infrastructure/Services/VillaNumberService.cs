@@ -54,12 +54,15 @@ namespace MagicVilla_Infrastructure.Services
 
         public async Task EditVillaNumber(VillaNumberBO villaNumber)
         {
-            var villaNumberEntity = await _applicationUnitOfWork.VillaNumbers.GetById(villaNumber.VillaNo);
+            var villaNumberInitial = await GetVillaNumber(villaNumber.VillaNo);
+            villaNumber.Id = villaNumberInitial.Id;
+
+            var villaNumberEntity = await _applicationUnitOfWork.VillaNumbers.GetById(villaNumber.Id);
 
             if (villaNumberEntity == null)
                 throw new Exception("Villa Number doesn't exist");
 
-            var villaCount = await _applicationUnitOfWork.VillaNumbers.GetCount(x => x.VillaId == villaNumber.VillaId);
+            var villaCount = await _applicationUnitOfWork.Villas.GetCount(x => x.Id == villaNumber.VillaId);
 
             if (villaCount == 0)
                 throw new Exception("Villa doesn't exist, you must have a valid Villa");

@@ -135,5 +135,34 @@ namespace MagicVilla_VillaAPI.Controllers
                 return BadRequest(_response);
             }
         }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateVillaNumber(VillaNumberEditModel model)
+        {
+            try
+            {
+                model.ResolveDependency(_scope);
+                await model.EditVillaNumber();
+
+                _response.StatusCode = HttpStatusCode.NoContent;
+                _response.IsSuccess = true;
+                _response.ErrorMessages = new List<string>();
+                _response.Result = null;
+
+                return Ok(_response);
+            }
+            catch (Exception ex)
+            {
+                _response.StatusCode = HttpStatusCode.BadRequest;
+                _response.IsSuccess = false;
+                _response.ErrorMessages = new List<string>()
+                {
+                    ex.Message
+                };
+                _response.Result = null;
+
+                return BadRequest(_response);
+            }
+        }
     }
 }

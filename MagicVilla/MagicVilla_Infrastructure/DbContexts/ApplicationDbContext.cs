@@ -4,9 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MagicVilla_Infrastructure.DbContexts
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole,
-        Guid, ApplicationUserClaim, ApplicationUserRole, ApplicationUserLogin,
-        ApplicationRoleClaim, ApplicationUserToken>, IApplicationDbContext
+    public class ApplicationDbContext : DbContext, IApplicationDbContext
     {
         private readonly string _connectionString;
         private readonly string _migrationAssemblyName;

@@ -1,7 +1,5 @@
 ﻿using Autofac;
-using MagicVilla_VillaAPI.Data;
 using MagicVilla_VillaAPI.Model;
-using MagicVilla_VillaAPI.Model.Dto;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;

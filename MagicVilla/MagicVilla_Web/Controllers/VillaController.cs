@@ -17,6 +17,19 @@ namespace MagicVilla_Web.Controllers
             _mapper = mapper;
         }
 
+        public async Task<IActionResult> IndexVilla()
+        {
+            var villaList = new List<VillaModel>();
+            var response = await _villaService.GetAllAsync<APIResponse>();
+
+            if (response != null && response.IsSuccess)
+            {
+                villaList = JsonConvert.DeserializeObject<List<VillaModel>>(Convert.ToString(response.Result));
+            }
+
+            return View(villaList);
+        }
+
         public async Task<IActionResult> CreateVilla()
         {
             return View();
@@ -36,17 +49,33 @@ namespace MagicVilla_Web.Controllers
             return View(model);
         }
 
-        public async Task<IActionResult> IndexVilla()
+        public async Task<IActionResult> UpdateVilla(int villaId)
         {
-            var villaList = new List<VillaModel>();
-            var response = await _villaService.GetAllAsync<APIResponse>();
+            var response = await _villaService.GetAsync<APIResponse>(villaId);
 
-            if(response != null && response.IsSuccess)
+            if (response != null && response.IsSuccess)
             {
-                villaList = JsonConvert.DeserializeObject<List<VillaModel>>(Convert.ToString(response.Result));
+                var model = JsonConvert.DeserializeObject<VillaModel>(Convert.ToString(response.Result));
+                return View(_mapper.Map<VillaEditModel>(model));
             }
 
-            return View(villaList);
+            return NotFound();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdateVilla(VillaEditModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var response = await _villaService.UpdateAsync<APIResponse>(model);
+
+                if (response != null && response.IsSuccess)
+                {
+                    return RedirectToAction(nameof(IndexVilla));
+                }
+            }
+            return View(model);
         }
     }
 }

@@ -1,4 +1,7 @@
+using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using MagicVilla_Infrastructure;
+using MagicVilla_Web;
 using Serilog;
 using Serilog.Events;
 using System.Reflection;
@@ -13,8 +16,16 @@ builder.Host.UseSerilog((ctx, lc) => lc
 
 try
 {
+    
+    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+    var assemblyName = Assembly.GetExecutingAssembly().FullName;
+
     // Add services to the container.
     builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+    builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder => {
+        containerBuilder.RegisterModule(new WebModule());
+        containerBuilder.RegisterModule(new InfrastructureModule(connectionString, assemblyName));
+    });
 
     builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

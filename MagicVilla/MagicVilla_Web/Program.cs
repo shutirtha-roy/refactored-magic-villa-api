@@ -2,6 +2,8 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using MagicVilla_Infrastructure;
 using MagicVilla_Web;
+using MagicVilla_Web.Services;
+using MagicVilla_Web.Services.IService;
 using Serilog;
 using Serilog.Events;
 using System.Reflection;
@@ -28,6 +30,8 @@ try
     });
 
     builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+    builder.Services.AddHttpClient<IVillaService, VillaService>();
 
     builder.Services.AddControllersWithViews();
 

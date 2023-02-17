@@ -3,7 +3,7 @@ using AutoMapper;
 using MagicVilla_Infrastructure.Services;
 using VillaNumberBO = MagicVilla_Infrastructure.BusinessObjects.VillaNumber;
 
-namespace MagicVilla_Web.Model
+namespace MagicVilla_Web.Models
 {
     public class VillaNumberListModel : BaseModel
     {

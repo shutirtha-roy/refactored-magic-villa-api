@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using MagicVilla_Web.Model;
+using MagicVilla_Web.Models;
 using VillaBO = MagicVilla_Infrastructure.BusinessObjects.Villa;
 using VillaNumberBO = MagicVilla_Infrastructure.BusinessObjects.VillaNumber;
 

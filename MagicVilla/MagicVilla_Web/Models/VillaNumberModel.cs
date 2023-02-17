@@ -3,7 +3,7 @@ using AutoMapper;
 using MagicVilla_Infrastructure.BusinessObjects;
 using MagicVilla_Infrastructure.Services;
 
-namespace MagicVilla_Web.Model
+namespace MagicVilla_Web.Models
 {
     public class VillaNumberModel : BaseModel
     {

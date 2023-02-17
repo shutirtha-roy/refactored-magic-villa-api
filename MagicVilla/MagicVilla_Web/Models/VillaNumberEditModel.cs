@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using VillaNumberBO = MagicVilla_Infrastructure.BusinessObjects.VillaNumber;
 using VillaNumberEO = MagicVilla_Infrastructure.Entities.VillaNumber;
 
-namespace MagicVilla_Web.Model
+namespace MagicVilla_Web.Models
 {
     public class VillaNumberEditModel : BaseModel
     {

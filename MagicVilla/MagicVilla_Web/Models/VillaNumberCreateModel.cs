@@ -4,7 +4,7 @@ using MagicVilla_Infrastructure.BusinessObjects;
 using MagicVilla_Infrastructure.Services;
 using System.ComponentModel.DataAnnotations;
 
-namespace MagicVilla_Web.Model
+namespace MagicVilla_Web.Models
 {
     public class VillaNumberCreateModel : BaseModel
     {

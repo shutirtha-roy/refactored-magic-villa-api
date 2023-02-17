@@ -1,21 +1,23 @@
 ﻿using Autofac;
 using AutoMapper;
 using MagicVilla_Infrastructure.Services;
+using System.ComponentModel.DataAnnotations;
 using VillaBO = MagicVilla_Infrastructure.BusinessObjects.Villa;
 
 namespace MagicVilla_Web.Models
 {
     public class VillaCreateModel : BaseModel
     {
+        [Required]
         public string Name { get; set; }
-        public string Details { get; set; }
+        public string? Details { get; set; }
+
+        [Required]
         public double Rate { get; set; }
         public int Sqft { get; set; }
         public int Occupancy { get; set; }
-        public string ImageUrl { get; set; }
-        public string Amenity { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public DateTime UpdatedDate { get; set; }
+        public string? ImageUrl { get; set; }
+        public string? Amenity { get; set; }
 
         private IVillaService _villaService;
         private IMapper _mapper;

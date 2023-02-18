@@ -11,6 +11,9 @@ namespace MagicVilla_Web
             builder.RegisterType<VillaService>().As<IVillaService>()
                 .InstancePerLifetimeScope();
 
+            builder.RegisterType<VillaNumberService>().As<IVillaNumberService>()
+                .InstancePerLifetimeScope();
+
             base.Load(builder);
         }
     }

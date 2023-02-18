@@ -33,6 +33,8 @@ try
 
     builder.Services.AddHttpClient<IVillaService, VillaService>();
 
+    builder.Services.AddHttpClient<IVillaNumberService, VillaNumberService>();
+
     builder.Services.AddControllersWithViews();
 
     var app = builder.Build();

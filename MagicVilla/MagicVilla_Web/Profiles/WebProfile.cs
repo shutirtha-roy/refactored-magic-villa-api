@@ -26,6 +26,9 @@ namespace MagicVilla_Web.Profiles
 
             CreateMap<VillaNumberBO, VillaNumberModel>()
                 .ReverseMap();
+
+            CreateMap<VillaNumberModel, VillaNumberEditModel>()
+                .ReverseMap();
         }
     }
 }

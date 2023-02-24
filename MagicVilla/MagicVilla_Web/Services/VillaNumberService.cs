@@ -1,10 +1,10 @@
 ﻿using MagicVilla_Infrastructure.Enum;
 using MagicVilla_Web.Models;
-using IVillaNumberServiceWeb = MagicVilla_Web.Services.IService.IVillaNumberService;
+using MagicVilla_Web.Services.IService;
 
 namespace MagicVilla_Web.Services
 {
-    public class VillaNumberService : BaseService, IVillaNumberServiceWeb
+    public class VillaNumberService : BaseService, IVillaNumberWebService
     {
         private readonly IHttpClientFactory _clientFactory;
         private string _villaUrl;

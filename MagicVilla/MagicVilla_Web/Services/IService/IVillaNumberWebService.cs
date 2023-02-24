@@ -2,7 +2,7 @@
 
 namespace MagicVilla_Web.Services.IService
 {
-    public interface IVillaNumberService
+    public interface IVillaNumberWebService
     {
         Task<T> GetAllAsync<T>();
         Task<T> GetAsync<T>(int id);

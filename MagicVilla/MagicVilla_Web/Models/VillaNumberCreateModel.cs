@@ -15,27 +15,17 @@ namespace MagicVilla_Web.Models
         public int VillaId { get; set; }
         public string SpecialDetails { get; set; }
 
-        private IVillaNumberService _villaNumberService;
         private IMapper _mapper;
 
-        public VillaNumberCreateModel(IVillaNumberService villaNumberService, IMapper mapper)
+        public VillaNumberCreateModel(IMapper mapper)
         {
-            _villaNumberService = villaNumberService;
             _mapper = mapper;
         }
 
         public override void ResolveDependency(ILifetimeScope scope)
         {
             base.ResolveDependency(scope);
-            _villaNumberService = _scope.Resolve<IVillaNumberService>();
             _mapper = _scope.Resolve<IMapper>();   
-        }
-
-        internal async Task CreateVillaNumber()
-        {
-            var villaNumber = _mapper.Map<VillaNumber>(this);
-
-            await _villaNumberService.CreateVillaNumber(villaNumber);
         }
     }
 }

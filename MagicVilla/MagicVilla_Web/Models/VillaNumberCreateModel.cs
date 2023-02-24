@@ -17,6 +17,11 @@ namespace MagicVilla_Web.Models
 
         private IMapper _mapper;
 
+        public VillaNumberCreateModel()
+        {
+
+        }
+
         public VillaNumberCreateModel(IMapper mapper)
         {
             _mapper = mapper;

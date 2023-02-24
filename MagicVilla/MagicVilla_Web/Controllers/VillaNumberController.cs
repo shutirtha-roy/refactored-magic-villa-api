@@ -3,6 +3,7 @@ using AutoMapper;
 using MagicVilla_Web.Models;
 using MagicVilla_Web.Services.IService;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 
@@ -63,10 +64,13 @@ namespace MagicVilla_Web.Controllers
             if (ModelState.IsValid)
             {
                 var response = await _villaNumberService.CreateAsync<APIResponse>(model.VillaNumber);
+
                 if (response != null && response.IsSuccess)
                 {
                     return RedirectToAction(nameof(IndexVillaNumber));
                 }
+
+                ModelState.AddModelError("ErrorMessages", response.ErrorMessages.FirstOrDefault());
             }
 
             var villaResponse = await _villaService.GetAllAsync<APIResponse>();

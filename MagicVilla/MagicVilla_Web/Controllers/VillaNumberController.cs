@@ -69,6 +69,18 @@ namespace MagicVilla_Web.Controllers
                 }
             }
 
+            var villaResponse = await _villaService.GetAllAsync<APIResponse>();
+
+            if (villaResponse != null && villaResponse.IsSuccess)
+            {
+                model.VillaList = JsonConvert.DeserializeObject<List<VillaModel>>
+                    (Convert.ToString(villaResponse.Result)).Select(i => new SelectListItem
+                    {
+                        Text = i.Name,
+                        Value = i.Id.ToString()
+                    });
+            }
+
             return View(model);
         }
     }

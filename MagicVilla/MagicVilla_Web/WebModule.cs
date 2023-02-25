@@ -21,6 +21,18 @@ namespace MagicVilla_Web
             builder.RegisterType<VillaNumberCreateVM>()
                 .AsSelf();
 
+            builder.RegisterType<VillaNumberEditModel>()
+                .AsSelf();
+
+            builder.RegisterType<VillaNumberEditVM>()
+                .AsSelf();
+
+            builder.RegisterType<VillaNumberDeleteModel>()
+                .AsSelf();
+
+            builder.RegisterType<VillaNumberDeleteVM>()
+                .AsSelf();
+
             base.Load(builder);
         }
     }

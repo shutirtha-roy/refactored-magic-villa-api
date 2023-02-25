@@ -1,11 +1,10 @@
 ﻿using Autofac;
 using AutoMapper;
 using System.ComponentModel.DataAnnotations;
-using MagicVilla_Infrastructure.BusinessObjects;
 
 namespace MagicVilla_Web.Models
 {
-    public class VillaNumberEditModel : BaseModel
+    public class VillaNumberDeleteModel : BaseModel
     {
         [Required]
         public int VillaNo { get; set; }
@@ -16,12 +15,12 @@ namespace MagicVilla_Web.Models
 
         private IMapper _mapper;
 
-        public VillaNumberEditModel()
+        public VillaNumberDeleteModel()
         {
 
         }
 
-        public VillaNumberEditModel(IMapper mapper)
+        public VillaNumberDeleteModel(IMapper mapper)
         {
             _mapper = mapper;
         }

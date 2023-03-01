@@ -8,12 +8,15 @@ namespace MagicVilla_Infrastructure.UnitOfWorks
     {
         public IVillaRepository Villas { get; private set; }
         public IVillaNumberRepository VillaNumbers { get; private set; }
+        public IUserRepository Users { get; private set; }
 
         public ApplicationUnitOfWork(IApplicationDbContext dbContext, 
-            IVillaRepository villaRepository, IVillaNumberRepository villaNumberRepository) : base((DbContext)dbContext)
+            IVillaRepository villaRepository, IVillaNumberRepository villaNumberRepository,
+            IUserRepository userRepository) : base((DbContext)dbContext)
         {
             Villas = villaRepository;
             VillaNumbers = villaNumberRepository;
+            Users = userRepository;
         }
     }
 }

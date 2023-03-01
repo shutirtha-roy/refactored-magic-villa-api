@@ -6,5 +6,6 @@ namespace MagicVilla_Infrastructure.UnitOfWorks
     {
         IVillaRepository Villas { get; }
         IVillaNumberRepository VillaNumbers { get; }
+        IUserRepository Users { get; }
     }
 }

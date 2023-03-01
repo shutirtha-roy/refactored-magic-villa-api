@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using MagicVilla_VillaAPI.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -29,6 +30,7 @@ namespace MagicVilla_VillaAPI.Controllers
         #endregion
 
         [HttpGet]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<object>> GetVillas()
         {
@@ -79,6 +81,7 @@ namespace MagicVilla_VillaAPI.Controllers
         #endregion
 
         [HttpGet("{id}")]
+        [Authorize(Roles = "admin")]
         public async Task<object> GetVilla(int id)
         {
             try
@@ -193,6 +196,7 @@ namespace MagicVilla_VillaAPI.Controllers
         #endregion
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "CUSTOM")]
         public async Task<IActionResult> DeleteVilla(int id)
         {
             try

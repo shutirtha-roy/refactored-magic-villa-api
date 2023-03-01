@@ -101,5 +101,6 @@ namespace MagicVilla_Infrastructure.DbContexts
 
         public DbSet<Villa> Villas { get; set; }
         public DbSet<VillaNumber> VillaNumbers { get; set; }
+        public DbSet<LocalUser> LocalUsers { get; set; }
     }
 }

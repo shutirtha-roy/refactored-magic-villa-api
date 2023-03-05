@@ -30,7 +30,6 @@ namespace MagicVilla_VillaAPI.Controllers
         #endregion
 
         [HttpGet]
-        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<object>> GetVillas()
         {
@@ -81,7 +80,6 @@ namespace MagicVilla_VillaAPI.Controllers
         #endregion
 
         [HttpGet("{id}")]
-        [Authorize(Roles = "admin")]
         public async Task<object> GetVilla(int id)
         {
             try
@@ -147,6 +145,7 @@ namespace MagicVilla_VillaAPI.Controllers
         #endregion
 
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> CreateVilla(VillaCreateModel model)
         {
             try
@@ -196,7 +195,7 @@ namespace MagicVilla_VillaAPI.Controllers
         #endregion
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "CUSTOM")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteVilla(int id)
         {
             try
@@ -244,6 +243,7 @@ namespace MagicVilla_VillaAPI.Controllers
         #endregion
 
         [HttpPut]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> UpdateVilla(VillaEditModel model)
         {
             try

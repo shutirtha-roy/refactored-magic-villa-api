@@ -1,6 +1,8 @@
 ﻿using Autofac;
 using MagicVilla_VillaAPI.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 using System.Net;
 
 namespace MagicVilla_VillaAPI.Controllers
@@ -78,6 +80,7 @@ namespace MagicVilla_VillaAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> CreateVillaNumber(VillaNumberCreateModel model)
         {
             try
@@ -108,6 +111,7 @@ namespace MagicVilla_VillaAPI.Controllers
         }
 
         [HttpDelete("{villaNo}")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteVillaNumber(int villaNo)
         {
             try
@@ -137,6 +141,7 @@ namespace MagicVilla_VillaAPI.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> UpdateVillaNumber(VillaNumberEditModel model)
         {
             try

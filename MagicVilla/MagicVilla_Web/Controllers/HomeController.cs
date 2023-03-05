@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MagicVilla_Web.Codes;
 using MagicVilla_Web.Models;
 using MagicVilla_Web.Services.IService;
 using Microsoft.AspNetCore.Mvc;
@@ -21,7 +22,8 @@ namespace MagicVilla_Web.Controllers
         public async Task<IActionResult> Index()
         {
             var villaList = new List<VillaModel>();
-            var response = await _villaService.GetAllAsync<APIResponse>();
+            var token = HttpContext.Session.GetString(SessionData.SessionToken);
+            var response = await _villaService.GetAllAsync<APIResponse>(token);
 
             if (response != null && response.IsSuccess)
             {

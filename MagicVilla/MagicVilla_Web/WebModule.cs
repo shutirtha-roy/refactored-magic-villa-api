@@ -15,6 +15,9 @@ namespace MagicVilla_Web
             builder.RegisterType<VillaNumberService>().As<IVillaNumberWebService>()
                 .InstancePerLifetimeScope();
 
+            builder.RegisterType<AuthService>().As<IAuthService>()
+                .InstancePerLifetimeScope();
+
             builder.RegisterType<VillaNumberCreateModel>()
                 .AsSelf();
 
@@ -32,6 +35,15 @@ namespace MagicVilla_Web
 
             builder.RegisterType<VillaNumberDeleteVM>()
                 .AsSelf();
+
+            builder.RegisterType<LoginRequestModel>()
+                .AsSelf();
+
+            builder.RegisterType<RegistrationRequestModel>()
+                .AsSelf();
+
+            builder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>()
+                .SingleInstance();
 
             base.Load(builder);
         }

@@ -4,6 +4,7 @@ using MagicVilla_Infrastructure;
 using MagicVilla_Web;
 using MagicVilla_Web.Services;
 using MagicVilla_Web.Services.IService;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Serilog;
 using Serilog.Events;
 using System.Reflection;
@@ -32,8 +33,27 @@ try
     builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
     builder.Services.AddHttpClient<IVillaService, VillaService>();
-
     builder.Services.AddHttpClient<IVillaNumberWebService, VillaNumberService>();
+    builder.Services.AddHttpClient<IAuthService, AuthService>();
+
+    builder.Services.AddDistributedMemoryCache();
+
+    builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+        .AddCookie(options =>
+        {
+            options.Cookie.HttpOnly = true;
+            options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+            options.LoginPath = "/Auth/Login";
+            options.AccessDeniedPath = "/Auth/AccessDenied";
+            options.SlidingExpiration = true;
+        });
+
+    builder.Services.AddSession(options =>
+    {
+        options.IdleTimeout = TimeSpan.FromMinutes(100);
+        options.Cookie.HttpOnly = true;
+        options.Cookie.IsEssential = true;
+    });
 
     builder.Services.AddControllersWithViews();
 
@@ -52,7 +72,13 @@ try
 
     app.UseRouting();
 
+    app.UseAuthentication();
+
     app.UseAuthorization();
+
+    app.UseAuthorization();
+
+    app.UseSession();
 
     app.MapControllerRoute(
         name: "default",

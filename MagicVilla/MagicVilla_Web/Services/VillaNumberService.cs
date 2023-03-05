@@ -16,50 +16,55 @@ namespace MagicVilla_Web.Services
             _villaUrl = configuration.GetValue<string>("ServiceUrls:VillaAPI");
         }
 
-        public Task<T> CreateAsync<T>(VillaNumberCreateModel model)
+        public Task<T> CreateAsync<T>(VillaNumberCreateModel model, string token)
         {
             return SendAsync<T>(new APIRequest()
             {
                 ApiType = ApiType.POST,
                 Data = model,
-                Url = $"{_villaUrl}/api/VillaNumberAPI"
+                Url = $"{_villaUrl}/api/VillaNumberAPI",
+                Token = token
             });
         }
 
-        public Task<T> DeleteAsync<T>(int id)
+        public Task<T> DeleteAsync<T>(int id, string token)
         {
             return SendAsync<T>(new APIRequest()
             {
                 ApiType = ApiType.DELETE,
-                Url = $"{_villaUrl}/api/VillaNumberAPI/{id}"
+                Url = $"{_villaUrl}/api/VillaNumberAPI/{id}",
+                Token = token
             });
         }
 
-        public Task<T> GetAllAsync<T>()
+        public Task<T> GetAllAsync<T>(string token)
         {
             return SendAsync<T>(new APIRequest()
             {
                 ApiType = ApiType.GET,
-                Url = $"{_villaUrl}/api/VillaNumberAPI/"
+                Url = $"{_villaUrl}/api/VillaNumberAPI/",
+                Token = token
             });
         }
 
-        public Task<T> GetAsync<T>(int id)
+        public Task<T> GetAsync<T>(int id, string token)
         {
             return SendAsync<T>(new APIRequest()
             {
                 ApiType = ApiType.GET,
-                Url = $"{_villaUrl}/api/VillaNumberAPI/{id}"
+                Url = $"{_villaUrl}/api/VillaNumberAPI/{id}",
+                Token = token
             });
         }
 
-        public Task<T> UpdateAsync<T>(VillaNumberEditModel model)
+        public Task<T> UpdateAsync<T>(VillaNumberEditModel model, string token)
         {
             return SendAsync<T>(new APIRequest()
             {
                 ApiType = ApiType.PUT,
                 Data = model,
-                Url = $"{_villaUrl}/api/VillaNumberAPI/"
+                Url = $"{_villaUrl}/api/VillaNumberAPI/",
+                Token = token
             });
         }
     }

@@ -5,10 +5,11 @@ using Microsoft.AspNetCore.Mvc;
 using System.Data;
 using System.Net;
 
-namespace MagicVilla_VillaAPI.Controllers
+namespace MagicVilla_VillaAPI.Controllers.v1
 {
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
+    [ApiVersion("1.0", Deprecated = true)]
     public class VillaNumberAPIController : Controller
     {
         private readonly ILifetimeScope _scope;
@@ -20,6 +21,13 @@ namespace MagicVilla_VillaAPI.Controllers
             _response = _scope.Resolve<APIResponse>();
         }
 
+        [HttpGet("GetString")]
+        public object Get()
+        {
+            return new string[] { "String1", "String2" };
+        }
+
+        //[MapToApiVersion("1.0")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<object>> GetVillaNumbers()
@@ -49,6 +57,13 @@ namespace MagicVilla_VillaAPI.Controllers
                 return BadRequest(_response);
             }
         }
+
+        //[MapToApiVersion("2.0")]
+        //[HttpGet]
+        //public IEnumerable<string> Get()
+        //{
+        //    return new string[] { "value1", "value2" };
+        //}
 
         [HttpGet("{villaNo}")]
         public async Task<object> GetVillaNumber(int villaNo)

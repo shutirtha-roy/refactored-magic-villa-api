@@ -9,8 +9,9 @@ using System.Net;
 
 namespace MagicVilla_VillaAPI.Controllers
 {
-    [Route("api/UsersAuth")]
+    [Route("api/v{version:apiVersion}/UsersAuth")]
     [ApiController]
+    [ApiVersionNeutral]
     public class UsersController : Controller
     {
         private readonly IUserService _userService;
@@ -49,7 +50,7 @@ namespace MagicVilla_VillaAPI.Controllers
         public async Task<IActionResult> Register(RegistrationRequestModel model)
         {
             var ifUserNameUnique = await _userService.IsUniqueUser(model.UserName);
-            if(!ifUserNameUnique)
+            if (!ifUserNameUnique)
             {
                 _response.StatusCode = HttpStatusCode.BadRequest;
                 _response.IsSuccess = false;

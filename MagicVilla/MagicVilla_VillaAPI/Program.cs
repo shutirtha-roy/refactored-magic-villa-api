@@ -35,7 +35,7 @@ try
         containerBuilder.RegisterModule(new InfrastructureModule(connectionString,
             assemblyName));
     });
-
+    builder.Services.AddResponseCaching();
     builder.Services.AddDbContext<ApplicationDbContext>(options =>
         options.UseSqlServer(connectionString, 
         m => m.MigrationsAssembly(assemblyName)));
@@ -73,7 +73,12 @@ try
 
     builder.Services.AddControllers(option =>
     {
-        option.ReturnHttpNotAcceptable = true;
+        option.CacheProfiles.Add("Default30",
+            new CacheProfile()
+            {
+                Duration = 30
+            });
+        //option.ReturnHttpNotAcceptable = true;
     }).AddNewtonsoftJson().AddXmlDataContractSerializerFormatters();
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();

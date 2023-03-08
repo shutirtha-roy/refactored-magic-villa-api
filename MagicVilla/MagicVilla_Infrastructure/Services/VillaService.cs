@@ -80,5 +80,20 @@ namespace MagicVilla_Infrastructure.Services
 
             return villas;
         }
+
+        public async Task<IList<VillaBO>> GetAllWithRespectToPage(int pageSize, int pageNumber)
+        {
+            var villasEO = await _applicationUnitOfWork.Villas.GetAllAccordingToPageAsync(null, "", pageSize, pageNumber);
+
+            var villas = new List<VillaBO>();
+
+            foreach (var villaEO in villasEO)
+            {
+                var villaBO = _mapper.Map<VillaBO>(villaEO);
+                villas.Add(villaBO);
+            }
+
+            return villas;
+        }
     }
 }

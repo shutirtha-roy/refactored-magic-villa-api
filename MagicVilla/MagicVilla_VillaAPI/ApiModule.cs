@@ -31,6 +31,9 @@ namespace MagicVilla_VillaAPI
             builder.RegisterType<APIResponse>()
                 .AsSelf();
 
+            builder.RegisterType<PaginationModel>()
+                .AsSelf();
+
             base.Load(builder);
         }
     }

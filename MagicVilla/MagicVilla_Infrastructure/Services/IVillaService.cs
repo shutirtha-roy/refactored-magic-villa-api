@@ -10,5 +10,6 @@ namespace MagicVilla_Infrastructure.Services
         Task DeleteVilla(int id);
         Task<VillaBO> GetVilla(int id);
         Task<IList<VillaBO>> GetVillas();
+        Task<IList<VillaBO>> GetAllWithRespectToPage(int pageSize, int pageNumber);
     }
 }

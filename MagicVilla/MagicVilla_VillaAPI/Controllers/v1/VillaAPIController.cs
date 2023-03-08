@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using System.Text.Json;
 
 namespace MagicVilla_VillaAPI.Controllers.v1
 {
@@ -32,12 +33,32 @@ namespace MagicVilla_VillaAPI.Controllers.v1
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<object>> GetVillas()
+        //[ResponseCache(Duration = 30)]
+        [ResponseCache(CacheProfileName = "Default30")]
+        public async Task<ActionResult<object>> GetVillas([FromQuery(Name = "filterOccupancy")]int? occupancy,
+            [FromQuery]string? search, int pageSize = 0, int pageNumber = 1)
         {
             try
             {
                 var model = _scope.Resolve<VillaListModel>();
-                var villas = await model.GetAllVillas();
+                //var villas = await model.GetAllVillas();
+                var villas = await model.GetAllVillasByPage(pageSize, pageNumber);
+
+                if (occupancy > 0)
+                {
+                    villas = villas.Where(o => o.Occupancy == occupancy).ToList();
+                }
+
+                if (!string.IsNullOrEmpty(search))
+                {
+                    villas = villas.Where(u => u.Name.ToLower().Contains(search)).ToList();
+                }
+
+                var pagination = _scope.Resolve<PaginationModel>();
+                pagination.PageNumber = pageNumber;
+                pagination.PageSize = pageSize;
+
+                Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagination));
 
                 _response.StatusCode = HttpStatusCode.OK;
                 _response.IsSuccess = true;
@@ -81,6 +102,7 @@ namespace MagicVilla_VillaAPI.Controllers.v1
         #endregion
 
         [HttpGet("{id}")]
+        [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
         public async Task<object> GetVilla(int id)
         {
             try

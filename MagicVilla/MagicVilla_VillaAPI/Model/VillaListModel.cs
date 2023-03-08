@@ -31,6 +31,12 @@ namespace MagicVilla_VillaAPI.Model
             return villas;
         }
 
+        internal async Task<IList<VillaBO>> GetAllVillasByPage(int pageSize, int pageNumber)
+        {
+            var villas = await _villaService.GetAllWithRespectToPage(pageSize, pageNumber);
+            return villas;
+        }
+
         internal async Task DeleteVilla(int id)
         {
             await _villaService.DeleteVilla(id);
